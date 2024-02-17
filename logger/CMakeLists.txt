@@ -17,9 +17,9 @@ add_library(url STATIC ${URL_LIB})
 
 add_executable(KeyLogger main.cpp)
 
-target_link_libraries(keyboard process)
+target_link_libraries(keyboard process url)
 target_link_libraries(KeyLogger process keyboard url oleacc)
-# target_link_libraries(KeyLogger process keyboard oleacc)
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
