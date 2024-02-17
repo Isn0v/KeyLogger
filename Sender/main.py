@@ -1,10 +1,10 @@
 from time import sleep
-import Sendler.log as log
+import log as log
 from os import path, remove, listdir
 
 DELAY = 60
 MESSAGE = 'GUI'
-DIRECTORY = 'EmailsToSend'
+DIRECTORY = '../EmailsToSend'
 if __name__ == "__main__":
     while True:
         files = [file for file in listdir(DIRECTORY) if file.endswith('.txt')]
