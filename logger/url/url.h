@@ -5,14 +5,12 @@
 #include <oleacc.h>
 #endif
 
-
 #include <stdio.h>
 #include <regex>
 
 #include <atlbase.h>
 #include <atlcom.h>
 #include <UIAutomation.h>
-
 
 // void hookUrl();
 

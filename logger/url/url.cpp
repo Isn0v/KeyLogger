@@ -2,7 +2,7 @@
 
 CComPtr<IUIAutomationElement> getChromeRoot(CComPtr<IUIAutomation> uia)
 {
-    
+
     CComPtr<IUIAutomationElement> root;
 
     if SUCCEEDED (uia->GetRootElement(&root))
