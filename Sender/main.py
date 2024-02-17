@@ -7,7 +7,7 @@ MESSAGE = 'GUI'
 DIRECTORY = '../EmailsToSend'
 if __name__ == "__main__":
     while True:
-        files = [file for file in listdir(DIRECTORY) if file.endswith('.txt')]
+        files = [DIRECTORY+'/'+file for file in listdir(DIRECTORY) if file.endswith('.txt')]
         log.send(MESSAGE, files)
         for file in files:
             if path.exists(f'{DIRECTORY}/{file}'):
