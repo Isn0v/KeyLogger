@@ -4,6 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email import encoders
 from email.mime.base import MIMEBase
 from jproperties import Properties
+from datetime import datetime
 
 
 p = Properties()
@@ -14,7 +15,8 @@ sender_email = p.get("sender_email").data
 receiver_email = p.get("receiver_email").data
 password = p.get("password").data
     
-subject = "Log Dump of recent session"
+time = datetime.now()
+subject = f"Log Dump at {time.strftime('%d/%m/%Y %H:%M:%S')} "
 body = ""
 
 message = MIMEMultipart()

