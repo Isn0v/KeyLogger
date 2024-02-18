@@ -5,6 +5,8 @@ from email import encoders
 from email.mime.base import MIMEBase
 from jproperties import Properties
 from datetime import datetime
+from sys import exit
+import os
 
 
 p = Properties()
@@ -31,7 +33,7 @@ message.attach(MIMEText(body, "plain"))
 filename = p.get("filename").data
 with open(filename, "rb") as attachment:
     part = MIMEBase("application", "octet-stream")
-    if not attachment.read():
+    if os.path.getsize(os.getcwd() + "/" + filename) == 0:
         exit(0)
     part.set_payload(attachment.read())
         
