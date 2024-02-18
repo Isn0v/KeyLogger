@@ -31,8 +31,11 @@ message.attach(MIMEText(body, "plain"))
 filename = p.get("filename").data
 with open(filename, "rb") as attachment:
     part = MIMEBase("application", "octet-stream")
+    if not attachment.read():
+        exit(0)
     part.set_payload(attachment.read())
-    
+        
+        
 encoders.encode_base64(part)
 
 part.add_header(
@@ -41,6 +44,7 @@ part.add_header(
 )
 
 message.attach(part)
+    
 text = message.as_string()
 
 context = ssl.create_default_context()
