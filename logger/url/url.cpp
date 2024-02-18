@@ -1,6 +1,6 @@
 #include "url.h"
 
-CComPtr<IUIAutomationElement> getChromeRoot(CComPtr<IUIAutomation> uia)
+CComPtr<IUIAutomationElement> getRoot(CComPtr<IUIAutomation> uia)
 {
 
     CComPtr<IUIAutomationElement> root;
@@ -85,7 +85,7 @@ void getChromeUrl(std::string &retUrl)
         return;
     }
 
-    CComPtr<IUIAutomationElement> root = getChromeRoot(uia);
+    CComPtr<IUIAutomationElement> root = getRoot(uia);
     find_url(uia, root, retUrl);
     CoUninitialize();
 }
